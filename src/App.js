@@ -1,10 +1,16 @@
 import React from 'react';
+import Card from './components/Cards';
+
 import './App.css';
+// import { Button } from '@material-ui/core';
 
 function App() {
   return (
     <div className="App">
-      <h1>App Component of React</h1>
+      {/* <Button variant="outlined" color="default">
+        App Component
+      </Button> */}
+      <Card />
     </div>
   );
 }
