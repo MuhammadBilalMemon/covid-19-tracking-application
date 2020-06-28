@@ -1,5 +1,12 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Dependencies
+
+    1- axios
+    2- React ChartJs 2
+    3- React Count Up
+    4- Material-UI
+
 ## Available Scripts
 
 In the project directory, you can run:
