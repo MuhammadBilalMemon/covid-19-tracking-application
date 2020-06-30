@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Card from './components/Card/Cards';
 import Chart from './components/Chart/Chart';
+import Header from './components/Header';
+
 
 import { fetchCounterData } from './services/apiService';
 
@@ -31,11 +33,13 @@ class App extends Component {
   render() {
     const { data, country } = this.state;
     return (
-      < div className="App" >
+      <div className="App" >
+        <Header />
+
         <Country handleCountryChange={this.handleCountryChange} />
         <Card data={data} />
         <Chart data={data} country={country} />
-      </div >
+      </div>
     )
   }
 }

@@ -11,8 +11,6 @@ const Country = ({ handleCountryChange }) => {
       setFetchedCountries(await fetchCountries());
     };
 
-    console.log(getCountries());
-
     getCountries();
   }, [setFetchedCountries]);
 
