@@ -6,24 +6,42 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
-    minHeight: 200,
+    maxWidth: 300,
     margin: 50,
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
+    padding: 30,
   },
   infected: {
+    marginTop: 50,
+    marginRight: 20,
+    marginBottom: 30,
     color: "#4fc3f7",
     borderColor: "#4fc3f7",
+    transition: "0.3s",
+    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+    "&:hover": {
+      boxShadow: "0 16px 70px -12.125px rgba(0,0,255,0.3)",
+    },
+  },
+  recovered: {
+    marginTop: 50,
+    marginRight: 20,
+    marginBottom: 30,
+    color: "#81c784",
+    borderColor: "#81c784",
+    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+    "&:hover": {
+      boxShadow: "0 16px 70px -12.125px rgba(0,255,0,0.3)",
+    },
+  },
+  deaths: {
+    marginTop: 50,
+    marginBottom: 30,
+    color: "#e57373",
+    borderColor: "#e57373",
+    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+    "&:hover": {
+      boxShadow: "0 16px 70px -12.125px rgba(255,0,0,0.3)",
+    },
   },
 });
 
@@ -37,8 +55,13 @@ const Cards = ({ data }) => {
   return (
     <div>
       <Grid container spacing={5} justify="center">
-        <Card className={classes.root} variant="outlined" xs={12} md={3}>
-          <CardContent className={classes.infected}>
+        <Card
+          className={(classes.root, classes.infected)}
+          variant="outlined"
+          xs={12}
+          md={3}
+        >
+          <CardContent>
             <Typography
               className={classes.title}
               color="textSecondary"
@@ -47,7 +70,6 @@ const Cards = ({ data }) => {
               Infected
             </Typography>
             <Typography variant="h5" component="h2">
-              Counter {" : "}
               <CountUp
                 start={0}
                 end={data.confirmed.value}
@@ -63,8 +85,13 @@ const Cards = ({ data }) => {
             </Typography>
           </CardContent>
         </Card>
-        <Card className={classes.root} variant="outlined" xs={12} md={3}>
-          <CardContent className={classes.infected}>
+        <Card
+          className={(classes.root, classes.recovered)}
+          variant="outlined"
+          xs={12}
+          md={3}
+        >
+          <CardContent>
             <Typography
               className={classes.title}
               color="textSecondary"
@@ -73,7 +100,6 @@ const Cards = ({ data }) => {
               Recovered
             </Typography>
             <Typography variant="h5" component="h2">
-              Counter {" : "}
               <CountUp
                 start={0}
                 end={data.recovered.value}
@@ -89,8 +115,13 @@ const Cards = ({ data }) => {
             </Typography>
           </CardContent>
         </Card>
-        <Card className={classes.root} variant="outlined" xs={12} md={3}>
-          <CardContent className={classes.infected}>
+        <Card
+          className={(classes.root, classes.deaths)}
+          variant="outlined"
+          xs={12}
+          md={3}
+        >
+          <CardContent>
             <Typography
               className={classes.title}
               color="textSecondary"
@@ -99,7 +130,6 @@ const Cards = ({ data }) => {
               Deaths
             </Typography>
             <Typography variant="h5" component="h2">
-              Counter {" : "}
               <CountUp
                 start={0}
                 end={data.deaths.value}

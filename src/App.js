@@ -1,15 +1,17 @@
-import React, { Component, Suspense } from 'react';
+import React, { Component } from 'react';
 import Card from './components/Card/Cards';
+import Chart from './components/Chart/Chart';
 
 import { fetchCounterData } from './services/apiService';
 
-
 import './App.css';
+import Country from './components/Country/Country';
 
 
 class App extends Component {
   state = {
-    data: {}
+    data: {},
+    country: ''
   }
 
   async componentDidMount() {
@@ -18,14 +20,21 @@ class App extends Component {
     this.setState({ data: fetchedData })
   }
 
-  render() {
 
-    const { data } = this.state;
+  handleCountryChange = async (country) => {
+    const fetchData = await fetchCounterData(country);
+
+    this.setState({ data: fetchData, country: country })
+  };
+
+
+  render() {
+    const { data, country } = this.state;
     return (
       < div className="App" >
-        <Suspense fallback={<h1>Loading Cards</h1>}>
-          <Card data={data} />
-        </Suspense>
+        <Country handleCountryChange={this.handleCountryChange} />
+        <Card data={data} />
+        <Chart data={data} country={country} />
       </div >
     )
   }
