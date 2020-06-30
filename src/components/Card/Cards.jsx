@@ -1,5 +1,9 @@
 import React from "react";
 import { Card, CardContent, Typography, Grid } from "@material-ui/core";
+import AirlineSeatFlatOutlinedIcon from "@material-ui/icons/AirlineSeatFlatOutlined";
+import HowToRegOutlinedIcon from "@material-ui/icons/HowToRegOutlined";
+import CancelPresentationOutlinedIcon from "@material-ui/icons/CancelPresentationOutlined";
+
 import CountUp from "react-countup";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -82,6 +86,8 @@ const Cards = ({ data }) => {
             </Typography>
             <Typography variant="body2" component="p">
               Number of active cases of COVID-19
+              <hr />
+              <div>{<AirlineSeatFlatOutlinedIcon fontSize="large" />}</div>
             </Typography>
           </CardContent>
         </Card>
@@ -112,6 +118,8 @@ const Cards = ({ data }) => {
             </Typography>
             <Typography variant="body2" component="p">
               Number of recoveries from COVID-19
+              <hr />
+              <HowToRegOutlinedIcon fontSize={"large"} />
             </Typography>
           </CardContent>
         </Card>
@@ -142,6 +150,8 @@ const Cards = ({ data }) => {
             </Typography>
             <Typography variant="body2" component="p">
               Number of deaths caused by COVID-19
+              <hr />
+              <CancelPresentationOutlinedIcon fontSize={"large"} />
             </Typography>
           </CardContent>
         </Card>
