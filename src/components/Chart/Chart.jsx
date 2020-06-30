@@ -42,7 +42,7 @@ const Chart = ({ data: { confirmed, deaths, recovered }, country }) => {
         options={{
           title: {
             display: true,
-            text: "Coid 19 Data about : Infected & Deaths",
+            text: "Covid 19 Data about : Infected & Deaths",
             fontSize: 25,
             fontColor: "#33691e",
           },
