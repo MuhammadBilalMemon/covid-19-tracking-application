@@ -11,14 +11,14 @@ export const FetchAPI = () => {
     useEffect(() => {
         if (url === "") {
             http
-                .get(`https://disease.sh/v2/all`)
+                .get(`${apiGeneralData}/all`)
                 .then((response) => response.data)
                 .then((data) => setGlobalData(data))
                 .catch((err) => console.log(err));
         }
         else {
             http
-                .get(`https://disease.sh/v2/countries/${url}`)
+                .get(`${apiGlobalHistory}/countries/${url}`)
                 .then((response) => response.data)
                 .then((data) => setGlobalData(data))
                 .catch((err) => console.log(err));

@@ -1,5 +1,5 @@
 {
     "apiUrl": "https://covid19.mathdro.id/api/countries",
-    "apiGeneralData": "https://disease.sh/v2/all",
+    "apiGeneralData": "https://disease.sh/v2",
     "apiGlobalHistory": "https://disease.sh/v2/historical"
 }
