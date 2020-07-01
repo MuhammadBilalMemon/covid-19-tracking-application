@@ -1,91 +1,127 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Container } from "@material-ui/core";
-import { fetchDailyData } from "../../services/apiService";
-import { Line, Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
+import { DataContext } from "./../context/DataProvider";
 
 import styles from "./Chart.module.css";
 
-const Chart = ({ data: { confirmed, deaths, recovered }, country }) => {
-  const [dailyData, setDailyData] = useState([]);
+const Chart = () => {
+  const { globalHistoryData } = useContext(DataContext);
 
-  useEffect(() => {
-    const fetchAPI = async () => {
-      const dailyData = await fetchDailyData();
-      setDailyData(dailyData);
-    };
+  let SelectedCountryChart, GlobalChart;
 
-    fetchAPI();
-  }, []);
+  let allData =
+    globalHistoryData.cases || globalHistoryData.country
+      ? globalHistoryData
+      : "Loading .....";
 
-  const GlobalChart =
-    dailyData.length !== 0 ? (
+  if (allData.country) {
+    const { timeline } = allData;
+    const { cases, deaths, recovered } = timeline;
+    const activeCases = [];
+    const deathCases = [];
+    const recoveredCases = [];
+    let dateData = [];
+
+    for (let _case in cases) {
+      let obj = { _case: cases[_case] };
+      activeCases.push(obj);
+    }
+    for (let _death in deaths) {
+      let obj = { _death: deaths[_death] };
+      deathCases.push(obj);
+    }
+    for (let _recover in recovered) {
+      let obj = { _recover: recovered[_recover] };
+      recoveredCases.push(obj);
+    }
+    for (let _date in cases) {
+      let obj = { date: _date };
+      dateData.push(obj);
+    }
+    GlobalChart = (
       <Line
         data={{
-          labels: dailyData.map(({ date }) => date),
+          labels: dateData.map(({ date }) => date),
           datasets: [
             {
-              data: dailyData.map(({ confirmed }) => confirmed),
+              data: activeCases.map(({ _case }) => _case),
               label: "Infected",
               borderColor: "#4fc3f7",
-              backgroundColor: "#e1f5fe",
               fill: true,
             },
             {
-              data: dailyData.map(({ deaths }) => deaths),
+              data: deathCases.map(({ _death }) => _death),
               label: "Deaths",
               borderColor: "#e57373",
-              backgroundColor: "rgba(255,0,0,0.5)",
+              fill: true,
+            },
+            {
+              data: recoveredCases.map(({ _recover }) => _recover),
+              label: "Recover",
+              borderColor: "#81c784",
               fill: true,
             },
           ],
         }}
-        options={{
-          title: {
-            display: true,
-            text: "Covid 19 Data about : Infected & Deaths",
-            fontSize: 25,
-            fontColor: "#33691e",
-          },
-          legend: {
-            display: true,
-            position: "top",
-          },
+      />
+    );
+  } else {
+    const { cases, deaths, recovered } = allData;
+    const activeCases = [];
+    const deathCases = [];
+    const recoveredCases = [];
+    let dateData = [];
+    for (let _case in cases) {
+      let obj = { _case: cases[_case] };
+      activeCases.push(obj);
+    }
+    for (let _death in deaths) {
+      let obj = { _death: deaths[_death] };
+      deathCases.push(obj);
+    }
+    for (let _recover in recovered) {
+      let obj = { _recover: recovered[_recover] };
+      recoveredCases.push(obj);
+    }
+    for (let _date in cases) {
+      let obj = { date: _date };
+      dateData.push(obj);
+    }
+    SelectedCountryChart = (
+      <Line
+        data={{
+          labels: dateData.map(({ date }) => date),
+
+          datasets: [
+            {
+              data: activeCases.map(({ _case }) => _case),
+              label: "Infected",
+              borderColor: "#4fc3f7",
+              fill: true,
+            },
+            {
+              data: deathCases.map(({ _death }) => _death),
+              label: "Deaths",
+              borderColor: "#e57373",
+              fill: true,
+            },
+            {
+              data: recoveredCases.map(({ _recover }) => _recover),
+              label: "Recovered",
+              borderColor: "#81c784",
+              fill: true,
+            },
+          ],
         }}
       />
-    ) : null;
-
-  const SelectedCountryChart = confirmed ? (
-    <Bar
-      data={{
-        labels: ["Infected", "Recovered", "Deaths"],
-        datasets: [
-          {
-            label: ["People Bar Chart"],
-            backgroundColor: ["#4fc3f7", "#81c784", "#e57373"],
-            fill: true,
-            data: [confirmed.value, recovered.value, deaths.value],
-          },
-        ],
-      }}
-      options={{
-        title: {
-          display: true,
-          text: `Country is ${country}`,
-          fontSize: 25,
-          fontColor: "#33691e",
-        },
-        legend: {
-          display: true,
-          position: "top",
-        },
-      }}
-    />
-  ) : null;
-
+    );
+  }
   return (
-    <Container maxWidth="md">
+    <Container>
       <div className={styles.container}>
-        {country ? SelectedCountryChart : GlobalChart}
+        {GlobalChart}
+        {SelectedCountryChart}
       </div>
     </Container>
   );

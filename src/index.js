@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import DataProvider from './components/context/DataProvider';
 import App from './App';
 
+import './index.css';
+
 ReactDOM.render(
-  <React.StrictMode>
+  <DataProvider>
     <App />
-  </React.StrictMode>,
+  </DataProvider>,
   document.getElementById('root')
 );

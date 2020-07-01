@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Container, FormControl, InputLabel, Select } from "@material-ui/core";
+import { DataContext } from "./../context/DataProvider";
 
-import { fetchCountries } from "../../services/apiService";
+const Country = () => {
+  const { setUrl, countryData } = useContext(DataContext);
 
-const Country = ({ handleCountryChange }) => {
-  const [fetchedCountries, setFetchedCountries] = useState([]);
-
-  useEffect(() => {
-    const getCountries = async () => {
-      setFetchedCountries(await fetchCountries());
-    };
-
-    getCountries();
-  }, [setFetchedCountries]);
+  const allCountries = countryData.countries ? countryData.countries : [];
 
   return (
     <Container maxWidth="md">
@@ -22,8 +15,7 @@ const Country = ({ handleCountryChange }) => {
         </InputLabel>
         <Select
           native
-          defaultValue=""
-          onChange={(e) => handleCountryChange(e.target.value)}
+          onChange={(e) => setUrl(e.target.value)}
           label="Select Country"
           inputProps={{
             name: "country",
@@ -31,9 +23,9 @@ const Country = ({ handleCountryChange }) => {
           }}
         >
           <option aria-label="None" value=""></option>
-          {fetchedCountries.map((country, i) => (
-            <option key={i} value={country}>
-              {country}
+          {allCountries.map((country) => (
+            <option key={country.name} value={country.name}>
+              {country.name}
             </option>
           ))}
         </Select>

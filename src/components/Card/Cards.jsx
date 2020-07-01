@@ -1,12 +1,14 @@
-import React from "react";
-import { Card, CardContent, Typography, Grid } from "@material-ui/core";
+import React, { useContext } from "react";
 import AirlineSeatFlatOutlinedIcon from "@material-ui/icons/AirlineSeatFlatOutlined";
 import HowToRegOutlinedIcon from "@material-ui/icons/HowToRegOutlined";
 import CancelPresentationOutlinedIcon from "@material-ui/icons/CancelPresentationOutlined";
+// import CircularProgress from "@material-ui/core/CircularProgress";
+
+import { Card, CardContent, Typography, Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { DataContext } from "./../context/DataProvider";
 
 import CountUp from "react-countup";
-
-import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   root: {
@@ -49,12 +51,22 @@ const useStyles = makeStyles({
   },
 });
 
-const Cards = ({ data }) => {
+const Cards = () => {
   const classes = useStyles();
 
-  if (!data.confirmed) {
-    return "Loadning....";
-  }
+  const { globalData } = useContext(DataContext);
+
+  let data = globalData.cases
+    ? globalData
+    : {
+        cases: 0,
+        recovered: 0,
+        active: 0,
+        deaths: 0,
+        todayCases: 0,
+        todayDeaths: 0,
+        todayRecovered: 0,
+      };
 
   return (
     <Grid container spacing={0} justify="center">
@@ -72,18 +84,21 @@ const Cards = ({ data }) => {
           >
             Infected
           </Typography>
-          <Typography variant="h5" component="h2">
-            <CountUp
-              start={0}
-              end={data.confirmed.value}
-              duration={2.5}
-              separator=","
-            />
+          <Typography variant={"h5"} component={"h2"}>
+            <CountUp start={0} end={data.cases} duration={2.5} separator="," />
           </Typography>
-          <Typography color="textSecondary">
-            {new Date(data.lastUpdate).toDateString()}
+          <Typography>
+            <b> Today Infected {" : "} </b>
+            {
+              <CountUp
+                start={0}
+                end={data.todayCases}
+                duration={3.0}
+                separator=","
+              />
+            }
           </Typography>
-          <Typography variant="body2" component="p">
+          <Typography variant="body2" component={"div"}>
             Number of active cases of COVID-19
             <hr />
             <div>{<AirlineSeatFlatOutlinedIcon fontSize="large" />}</div>
@@ -104,18 +119,26 @@ const Cards = ({ data }) => {
           >
             Recovered
           </Typography>
-          <Typography variant="h5" component="h2">
+          <Typography variant={"h5"} component={"h2"}>
             <CountUp
               start={0}
-              end={data.recovered.value}
+              end={data.recovered}
               duration={2.5}
               separator=","
             />
           </Typography>
-          <Typography color="textSecondary">
-            {new Date(data.lastUpdate).toDateString()}
+          <Typography>
+            <b>Today Recovered {" : "}</b>
+            {
+              <CountUp
+                start={0}
+                end={data.todayRecovered}
+                duration={3.0}
+                separator=","
+              />
+            }
           </Typography>
-          <Typography variant="body2" component="p">
+          <Typography variant="body2" component={"div"}>
             Number of recoveries from COVID-19
             <hr />
             <HowToRegOutlinedIcon fontSize={"large"} />
@@ -136,18 +159,21 @@ const Cards = ({ data }) => {
           >
             Deaths
           </Typography>
-          <Typography variant="h5" component="h2">
-            <CountUp
-              start={0}
-              end={data.deaths.value}
-              duration={2.5}
-              separator=","
-            />
+          <Typography variant={"h5"} component={"h2"}>
+            <CountUp start={0} end={data.deaths} duration={2.5} separator="," />
           </Typography>
-          <Typography color="textSecondary">
-            {new Date(data.lastUpdate).toDateString()}
+          <Typography>
+            <b> Today Deaths {" : "} </b>
+            {
+              <CountUp
+                start={0}
+                end={data.todayDeaths}
+                duration={2.5}
+                separator=","
+              />
+            }
           </Typography>
-          <Typography variant="body2" component="p">
+          <Typography variant="body2" component={"div"}>
             Number of deaths caused by COVID-19
             <hr />
             <CancelPresentationOutlinedIcon fontSize={"large"} />
