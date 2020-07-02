@@ -18,7 +18,7 @@ export const FetchAPI = () => {
         }
         else {
             http
-                .get(`${apiGlobalHistory}/countries/${url}`)
+                .get(`${apiGeneralData}/countries/${url}`)
                 .then((response) => response.data)
                 .then((data) => setGlobalData(data))
                 .catch((err) => console.log(err));
